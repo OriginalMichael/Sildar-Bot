@@ -17,7 +17,7 @@ module.exports.start = () => {
   bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
+    logger.info(bot.username + ' - (' + bot.id + ')');a
   });
 
   bot.on('message', function (user, userID, channelID, message, evt) {
