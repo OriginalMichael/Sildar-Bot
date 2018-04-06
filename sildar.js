@@ -91,7 +91,7 @@ module.exports.start = () => {
       if (message.match(/!varjil/i)) {
          bot.sendMessage({
           to: channelID,
-          message: 'I am black. :varjilisblack:',
+          message: 'I am black. <:varjilisblack:431658564101210122>',
         }); 
         return;
       }
