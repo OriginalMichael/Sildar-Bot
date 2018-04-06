@@ -34,9 +34,9 @@ module.exports.start = () => {
       if (message.match(/!sildar roll d\d+/i)) {
         bot.sendMessage({
           to: channelID,
-          message: 'I rolls a 1! I Suck!',
+          message: 'I roll a 1! I Suck!',
         }); 
-        break;    
+        return;    
       }
     } catch (err) {
       console.log(err);
