@@ -48,6 +48,32 @@ module.exports.start = () => {
         }); 
         return;
       }
+      if (message.match(/!proll d\d+/i)) {
+        const max = message.match(/!proll d(\d+)/i)[1];
+        const result = (Math.floor((Math.random() * max)) + 1).toString();
+        bot.sendMessage({
+          to: userID,
+          message: `${user} rolls a ${result}!`,
+        }); 
+        return;
+      }
+      if (message.match(/!proll \d+d\d+/i)) {
+        const match = message.match(/!proll (\d+)d(\d+)/i);
+        const num = match[1];
+        const max = match[2];
+        const result = [];
+        let sum = 0;
+        for (let i = 0; i < num; i++) {
+          const val = Math.floor((Math.random() * max)) + 1;
+          result.push(val);
+          sum += val;
+        }
+        bot.sendMessage({
+          to: userID,
+          message: `${user} rolls ${result} = ${sum}!`.replace(/,/g, ' + '),
+        }); 
+        return;
+      }
       if (message.match(/!sildar roll d\d+/i)) {
         bot.sendMessage({
           to: channelID,
