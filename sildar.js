@@ -47,7 +47,7 @@ module.exports.start = () => {
         case 'roll3':
           bot.sendMessage({
             to: channelID,
-            message: '2'
+            message: '3'
           });
           break;
       }
