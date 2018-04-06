@@ -31,6 +31,13 @@ module.exports.start = () => {
         }); 
         return;
       }
+      if (message.match(/!sildar roll d\d+/i)) {
+        bot.sendMessage({
+          to: channelID,
+          message: 'Sildar rolls a 1! Sildar Sucks!',
+        }); 
+        break;    
+      }
     } catch (err) {
       bot.sendMessage({
         to: channelID,
