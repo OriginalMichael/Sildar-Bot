@@ -36,7 +36,7 @@ module.exports.start = () => {
           to: channelID,
           message: 'I roll a 1! I Suck!',
         }); 
-        break;    
+        return;    
       }
     } catch (err) {
       console.log(err);
