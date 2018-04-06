@@ -31,6 +31,23 @@ module.exports.start = () => {
         }); 
         return;
       }
+      if (message.match(/!roll \d+d\d+/i)) {
+        const match = message.match(/!roll (\d+)d(\d+)/i);
+        const num = match[1];
+        const max = match[2];
+        const result = [];
+        let sum = 0;
+        for (let i = 0; i < num; i++) {
+          const val = Math.floor((Math.random() * max)) + 1;
+          result.push(val);
+          sum += val;
+        }
+        bot.sendMessage({
+          to: channelID,
+          message: `${user} rolls ${result} = ${sum}!`.replace(',', ' + '),
+        }); 
+        return;
+      }
       if (message.match(/!sildar roll d\d+/i)) {
         bot.sendMessage({
           to: channelID,
