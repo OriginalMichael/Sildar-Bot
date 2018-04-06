@@ -88,6 +88,13 @@ module.exports.start = () => {
         }); 
         return;
       }
+      if (message.match(/!varjil/i)) {
+         bot.sendMessage({
+          to: channelID,
+          message: 'I am black.',
+        }); 
+        return;
+      }
     } catch (err) {
       console.log(err);
       bot.sendMessage({
