@@ -44,6 +44,12 @@ module.exports.start = () => {
             message: '20'
           });
           break;
+        case 'roll3':
+          bot.sendMessage({
+            to: channelID,
+            message: '2'
+          });
+          break;
       }
     }
   });
