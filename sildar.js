@@ -21,36 +21,14 @@ module.exports.start = () => {
   });
 
   bot.on('message', function (user, userID, channelID, message, evt) {
-    if (message.substring(0, 1) == '!') {
-      var args = message.substring(1).split(' ');
-      var cmd = args[0];       
-      args = args.splice(1);
-      switch(cmd) {
-        case 'ping':
-          bot.sendMessage({
-            to: channelID,
-            message: 'Pong!'
-          });
-          break;
-        case 'roll':
-          bot.sendMessage({
-            to: channelID,
-            message: '1'
-          });
-          break;
-        case 'roll2':
-          bot.sendMessage({
-            to: channelID,
-            message: '20'
-          });
-          break;
-        case 'roll3':
-          bot.sendMessage({
-            to: channelID,
-            message: '3'
-          });
-          break;
-      }
+    if (message.match(/!roll d\d+/i)) {
+      const max = message.match(/!roll d(\d+)/i)[1];
+      const result = (Math.floor((Math.random() * max)) + 1).toString();
+      bot.sendMessage({
+        to: channelID,
+        message: `${user} rolls a ${result}!`,
+      }); 
+      break;
     }
   });
 }
