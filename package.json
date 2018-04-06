@@ -2,10 +2,11 @@
   "name": "sildar-bot",
   "version": "1.0.0",
   "description": "Sildar bot for Discord",
-  "main": "sildar.js",
+  "main": "package.js",
   "author": "MICHAEL-LI",
   "dependencies": {
     "discord.io": "^2.5.3",
+    "githubhook": "^1.9.3",
     "winston": "^2.4.1"
   }
 }
