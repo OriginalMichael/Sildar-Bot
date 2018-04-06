@@ -32,6 +32,12 @@ module.exports.start = () => {
             message: 'Pong!'
           });
           break;
+        case 'roll':
+          bot.sendMessage({
+            to: channelID,
+            message: '1'
+          });
+          break;
       }
     }
   });
