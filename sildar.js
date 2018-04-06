@@ -22,7 +22,7 @@ module.exports.start = () => {
 
   bot.on('message', function (user, userID, channelID, message, evt) {
     try {
-      if (message.match(/!roll d\d+/i)) {a
+      if (message.match(/!roll d\d+/i)) {
         const max = message.match(/!roll d(\d+)/i)[1];
         const result = (Math.floor((Math.random() * max)) + 1).toString();
         bot.sendMessage({
@@ -36,7 +36,7 @@ module.exports.start = () => {
           to: channelID,
           message: 'I roll a 1! I Suck!',
         }); 
-        return;    
+        break;    
       }
     } catch (err) {
       console.log(err);
