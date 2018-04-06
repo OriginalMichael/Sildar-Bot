@@ -28,7 +28,7 @@ module.exports.start = () => {
         to: channelID,
         message: `${user} rolls a ${result}!`,
       }); 
-      break;
+      return;
     }
   });
 }
