@@ -44,7 +44,7 @@ module.exports.start = () => {
         }
         bot.sendMessage({
           to: channelID,
-          message: `${user} rolls ${result} = ${sum}!`.replace('/,/g', ' + '),
+          message: `${user} rolls ${result} = ${sum}!`.replace(/,/g, ' + '),
         }); 
         return;
       }
