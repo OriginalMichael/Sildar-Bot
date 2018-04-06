@@ -17,12 +17,12 @@ module.exports.start = () => {
   bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');a
+    logger.info(bot.username + ' - (' + bot.id + ')');
   });
 
   bot.on('message', function (user, userID, channelID, message, evt) {
     try {
-      if (message.match(/!roll d\d+/i)) {
+      if (message.match(/!roll d\d+/i)) {a
         const max = message.match(/!roll d(\d+)/i)[1];
         const result = (Math.floor((Math.random() * max)) + 1).toString();
         bot.sendMessage({
