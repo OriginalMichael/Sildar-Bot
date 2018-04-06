@@ -36,9 +36,10 @@ module.exports.start = () => {
           to: channelID,
           message: 'Sildar rolls a 1! Sildar Sucks!',
         }); 
-        break;    
+        return;    
       }
     } catch (err) {
+      console.log(err);
       bot.sendMessage({
         to: channelID,
         message: 'Someone broke me!',

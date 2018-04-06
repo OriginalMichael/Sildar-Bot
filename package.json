@@ -7,6 +7,7 @@
   "dependencies": {
     "discord.io": "^2.5.3",
     "githubhook": "^1.9.3",
+    "shelljs": "^0.8.1",
     "winston": "^2.4.1"
   }
 }
