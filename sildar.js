@@ -143,11 +143,13 @@ module.exports.start = () => {
       num -= 1; 
     }
     let processed = list[num];
-    const numRandom = processed.match(/\${\d+-\d+}/g).length;
+    const toProcess = processed.match(/\${\d+ to \d+}/g);
+    let numRandom = 0;
+    if (toProcess) numRandom = toProcess.length;
     for(let i = 0; i < numRandom; i++) {
       const min = processed.match(/\${(\d+)/)[1];
-      const max = processed.match(/\${\d+-(\d+)/)[1];
-      processed = processed.replace(/\${\d+-\d+}/, randomInteger(min, max));
+      const max = processed.match(/\${\d+ to (\d+)/)[1];
+      processed = processed.replace(/\${\d+ to \d+}/, randomInteger(min, max));
     }
     const quote = `${processed} ${signature} (${num + 1}/${list.length})`;
     bot.sendMessage({
