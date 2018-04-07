@@ -31,7 +31,7 @@ module.exports.start = () => {
       if (message.match(/!sildar roll \d+d\d+/i)) return sildarRollMultiple(channelID, message);
       if (message.match(/!sildar/i)) return sildarStatus(channelID);
       if (message.match(/!varjil/i)) return varjilQuotes(channelID);
-      if (message.match(/!ilthar/i)) return iltharQuotes(channelID);
+      if (message.match(/!ilthar/i)) return iltharQuotes(channelID, message);
     } catch (err) {
       console.log(err);
       bot.sendMessage({
@@ -144,15 +144,22 @@ module.exports.start = () => {
     });
   }
 
-  const iltharQuotes = (channelID) => {
+  const iltharQuotes = (channelID, message) => {
+    const query = message.match(/!ilthar (\d+)/i);
+    let num = 0;
+    if (query.length > 1) num = query[1];
     const list = [
       'Do you have burgers?',
       'I want a fifteen feet long two by four.',
       'Here, have 20 gold.',
       'I will have one of everything. Bring it to my room.',
     ];
-    const random = Math.floor((Math.random() * list.length));
-    const quote = `${list[random]} - Ilthar~`;
+    if (num > list.length || num < 1) {
+      num = Math.floor((Math.random() * list.length));
+    } else {
+      num -= 1; 
+    }
+    const quote = `${list[num]} - Ilthar~`;
     bot.sendMessage({
       to: channelID,
       message: quote,
