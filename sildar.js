@@ -85,7 +85,7 @@ module.exports.start = () => {
     const max = match[2];
     const result = [];
     let sum = 0;
-    if (num === '1') return rollSingle(user, channelID, message);
+    if (num === '1') return rollSingle(user, channelID, message.replace('!roll 1d', '!roll d'));
     for (let i = 0; i < num; i++) {
       const val = Math.floor((Math.random() * max)) + 1;
       result.push(val);
@@ -103,7 +103,7 @@ module.exports.start = () => {
     const max = match[2];
     const result = [];
     let sum = 0;
-    if (num === '1') return privateRollSingle(userID, message);
+    if (num === '1') return privateRollSingle(userID, message.replace('!proll 1d', '!proll d'));
     for (let i = 0; i < num; i++) {
       const val = Math.floor((Math.random() * max)) + 1;
       result.push(val);
