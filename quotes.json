@@ -43,5 +43,11 @@
       "You suck.",
       "I have murdered ${3 to 57} people so far today."
     ]
+  },
+  "!mepoile": {
+    "signature": "- mepoile~",
+    "quotes": [
+      "I am mepoile."
+    ]
   }
 }
