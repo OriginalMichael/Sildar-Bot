@@ -145,9 +145,11 @@ module.exports.start = () => {
   }
 
   const iltharQuotes = (channelID, message) => {
-    const query = message.match(/!ilthar (\d+)/i);
     let num = 0;
-    if (query.length > 1) num = query[1];
+    try {
+      const query = message.match(/!ilthar (\d+)/i);
+      if (query.length > 1) num = query[1];
+    } catch (err) {}
     const list = [
       'Do you have burgers?',
       'I want a fifteen feet long two by four.',
