@@ -1,6 +1,7 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
+var quotes = retuire('./quotes.json');
 
 module.exports.start = () => {
   logger.remove(logger.transports.Console);
@@ -30,9 +31,9 @@ module.exports.start = () => {
       if (message.match(/!sildar roll d\d+/i)) return sildarRollSingle(channelID);
       if (message.match(/!sildar roll \d+d\d+/i)) return sildarRollMultiple(channelID, message);
       if (message.match(/!sildar/i)) return sildarStatus(channelID);
-      if (message.match(/!varjil/i)) return varjilQuotes(channelID, message);
-      if (message.match(/!ilthar/i)) return iltharQuotes(channelID, message);
-      if (message.match(/!mepole/i)) return mepoleQuotes(channelID, message);
+      if (message.match(/!varjil/i)) return quote(channelID, message, '!varjil');
+      if (message.match(/!ilthar/i)) return quote(channelID, message, '!ilthar');
+      if (message.match(/!mepole/i)) return quote(channelID, message, '!mepole');
     } catch (err) {
       console.log(err);
       bot.sendMessage({
@@ -43,19 +44,7 @@ module.exports.start = () => {
   });
 
   const listCommands = (channelID) => {
-    const list = [
-      '! commands',
-      '! roll dxx',
-      '! roll xdxx',
-      '! proll dxx',
-      '! proll xdxx',
-      '! sildar roll dxx',
-      '! sildar roll xdxx',
-      '! sildar',
-      '! varjil',
-      '! ilthar x',
-      '! mepole x',
-    ];
+    const list = quotes['!commands'].quotes;
     const commands = `${list}`.replace(/,/g, '\n');
     bot.sendMessage({
       to: channelID,
@@ -65,7 +54,7 @@ module.exports.start = () => {
 
   const rollSingle = (user, channelID, message) => {
     const max = message.match(/!roll d(\d+)/i)[1];
-    const result = (Math.floor((Math.random() * max)) + 1).toString();
+    const result = (randomInteger(1, max)).toString();
     bot.sendMessage({
       to: channelID,
       message: `${user} rolls a ${result}!`,
@@ -74,7 +63,7 @@ module.exports.start = () => {
 
   const privateRollSingle = (userID, message) => {
     const max = message.match(/!proll d(\d+)/i)[1];
-    const result = (Math.floor((Math.random() * max)) + 1).toString();
+    const result = (randomInteger(1, max)).toString();
     bot.sendMessage({
       to: userID,
       message: `You roll a ${result}!`,
@@ -89,7 +78,7 @@ module.exports.start = () => {
     let sum = 0;
     if (num === '1') return rollSingle(user, channelID, message.replace('!roll 1d', '!roll d'));
     for (let i = 0; i < num; i++) {
-      const val = Math.floor((Math.random() * max)) + 1;
+      const val = randomInteger(1, max);
       result.push(val);
       sum += val;
     }
@@ -107,7 +96,7 @@ module.exports.start = () => {
     let sum = 0;
     if (num === '1') return privateRollSingle(userID, message.replace('!proll 1d', '!proll d'));
     for (let i = 0; i < num; i++) {
-      const val = Math.floor((Math.random() * max)) + 1;
+      const val = randomInteger(1, max);
       result.push(val);
       sum += val;
     }
@@ -139,59 +128,36 @@ module.exports.start = () => {
     });
   }
   
-  const quote = (channelID, message, list, regex, signature) => {
+  const quote = (channelID, message, who) => {
+    const list = quotes[who].quotes;
+    const signature = quotes[who].signature;
+    const regex = new RegExp(`${who} (\\d+)`, 'i');
     let num = 0;
     try {
       const query = message.match(regex);
       if (query.length > 1) num = query[1];
     } catch (err) {}
     if (num > list.length || num < 1) {
-      num = Math.floor((Math.random() * list.length));
+      num = randomInteger(0, list.length - 1);
     } else {
       num -= 1; 
     }
-    const quote = `${list[num]} ${signature} (${num + 1}/${list.length})`;
+    let processed = list[num];
+    const numRandom = processed.match(/\${\d+-\d+}/g).length;
+    for(let i = 0; i < numRandom; i++) {
+      const min = processed.match(/\${(\d+)/)[1];
+      const max = processed.match(/\${\d+-(\d+)/)[1];
+      processed = processed.replace(/\${\d+-\d+}/, randomInteger(min, max));
+    }
+    const quote = `${processed} ${signature} (${num + 1}/${list.length})`;
     bot.sendMessage({
       to: channelID,
       message: quote,
     });
   }
-
-  const varjilQuotes = (channelID, message) => {
-    const list = [
-      'I am black. <:varjilisblack:431658564101210122>',
-      'Something came up last minute. Again.',
-      'I\'m tired.',
-      'You suck. jkjk. No. Actually, you are a loser.',
-      'It\'s 10 PM. Almost time for lunch.',
-      'VDawg is in da haus!',
-      'oh lol\nkk\nyay\nim a black guy\ni know thats news to some of you\nwhat is scott supposed to me\nbe*\n',
-    ];
-    return quote(channelID, message, list, /!varjil (\d+)/i, '- Varjil~');
-  }
-
-  const iltharQuotes = (channelID, message) => {
-    const list = [
-      'Do you have burgers?',
-      'I want a fifteen feet long two by four.',
-      'Here, have 20 gold.',
-      'I will have one of everything. Bring it to my room.',
-    ];
-    return quote(channelID, message, list, /!ilthar (\d+)/i, '- Ilthar~');
-  }
   
-  const mepoleQuotes = (channelID, message) => {
-    const random = randomInteger(57, 3);
-    const list = [
-      'I am mepole.',
-      'You suck.',
-      `I have murdered ${random} people so far today.`,
-    ];
-    return quote(channelID, message, list, /!mepole (\d+)/i, '- mepole~');
-  }
-  
-  const randomInteger = (max, min) => {
-    if (!min) min = 0;
-    return Math.floor((Math.random() * max)) + min;
+  const randomInteger = (min, max) => {
+    if (min > max) return -1;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
