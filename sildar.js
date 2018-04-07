@@ -149,6 +149,8 @@ module.exports.start = () => {
     for(let i = 0; i < numRandom; i++) {
       const min = processed.match(/\${(\d+)/)[1];
       const max = processed.match(/\${\d+ to (\d+)/)[1];
+      console.log('min: ' + min);
+      console.log('max: ' + max);
       processed = processed.replace(/\${\d+ to \d+}/, randomInteger(min, max));
     }
     const quote = `${processed} ${signature} (${num + 1}/${list.length})`;
