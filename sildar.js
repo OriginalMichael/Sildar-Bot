@@ -30,8 +30,9 @@ module.exports.start = () => {
       if (message.match(/!sildar roll d\d+/i)) return sildarRollSingle(channelID);
       if (message.match(/!sildar roll \d+d\d+/i)) return sildarRollMultiple(channelID, message);
       if (message.match(/!sildar/i)) return sildarStatus(channelID);
-      if (message.match(/!varjil/i)) return varjilQuotes(channelID);
+      if (message.match(/!varjil/i)) return varjilQuotes(channelID, message);
       if (message.match(/!ilthar/i)) return iltharQuotes(channelID, message);
+      if (message.match(/!mepole/i)) return mepoleQuotes(channelID, message);
     } catch (err) {
       console.log(err);
       bot.sendMessage({
@@ -53,6 +54,7 @@ module.exports.start = () => {
       '! sildar',
       '! varjil',
       '! ilthar x',
+      '! mepole x',
     ];
     const commands = `${list}`.replace(/,/g, '\n');
     bot.sendMessage({
@@ -136,35 +138,59 @@ module.exports.start = () => {
       message: 'Sildar is up and running!',
     });
   }
-
-  const varjilQuotes = (channelID) => {
+  
+  const quote = (channelID, message, list, regex, signature) => {
+    let num = 0;
+    try {
+      const query = message.match(regex);
+      if (query.length > 1) num = query[1];
+    } catch (err) {}
+    if (num > list.length || num < 1) {
+      num = Math.floor((Math.random() * list.length));
+    } else {
+      num -= 1; 
+    }
+    const quote = `${list[num]} ${signature} (${num + 1}/${list.length})`;
     bot.sendMessage({
       to: channelID,
-      message: 'I am black. <:varjilisblack:431658564101210122>',
+      message: quote,
     });
   }
 
+  const varjilQuotes = (channelID, message) => {
+    const list = [
+      'I am black. <:varjilisblack:431658564101210122>',
+      'Something came up last minute. Again.',
+      'I\'m tired.',
+      'You suck. jkjk. No. Actually, you are a loser.',
+      'It\'s 10 PM. Almost time for lunch.',
+      'VDawg is in da haus!',
+      'oh lol\nkk\nyay\nim a black guy\ni know thats news to some of you\nwhat is scott supposed to me\nbe*',
+    ];
+    return quote(channelID, message, list, /!varjil (\d+)/i, '- Varjil~');
+  }
+
   const iltharQuotes = (channelID, message) => {
-    let num = 0;
-    try {
-      const query = message.match(/!ilthar (\d+)/i);
-      if (query.length > 1) num = query[1];
-    } catch (err) {}
     const list = [
       'Do you have burgers?',
       'I want a fifteen feet long two by four.',
       'Here, have 20 gold.',
       'I will have one of everything. Bring it to my room.',
     ];
-    if (num > list.length || num < 1) {
-      num = Math.floor((Math.random() * list.length));
-    } else {
-      num -= 1; 
-    }
-    const quote = `${list[num]} - Ilthar~ (${num + 1}/${list.length})`;
-    bot.sendMessage({
-      to: channelID,
-      message: quote,
-    });
+    return quote(channelID, message, list, /!ilthar (\d+)/i, '- Ilthar~');
+  }
+  
+  const mepoleQuotes = (channelID, message) => {
+    const random = randomInteger(57, 3);
+    const list = [
+      'I am mepole',
+      `I have murdered ${random} people so far today.`,
+    ];
+    return quote(channelID, message, list, /!mepole (\d+)/i, '- mepole~');
+  }
+  
+  const randomInteger = (max, min) => {
+    if (!min) min = 0;
+    return Math.floor((Math.random() * max)) + min;
   }
 }
