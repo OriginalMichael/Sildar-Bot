@@ -1,7 +1,7 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
-var quotes = retuire('./quotes.json');
+var quotes = require('./quotes.json');
 
 module.exports.start = () => {
   logger.remove(logger.transports.Console);
