@@ -165,7 +165,7 @@ module.exports.start = () => {
       'You suck. jkjk. No. Actually, you are a loser.',
       'It\'s 10 PM. Almost time for lunch.',
       'VDawg is in da haus!',
-      'oh lol\nkk\nyay\nim a black guy\ni know thats news to some of you\nwhat is scott supposed to me\nbe*',
+      'oh lol\nkk\nyay\nim a black guy\ni know thats news to some of you\nwhat is scott supposed to me\nbe*\n',
     ];
     return quote(channelID, message, list, /!varjil (\d+)/i, '- Varjil~');
   }
@@ -183,7 +183,8 @@ module.exports.start = () => {
   const mepoleQuotes = (channelID, message) => {
     const random = randomInteger(57, 3);
     const list = [
-      'I am mepole',
+      'I am mepole.',
+      'You suck.',
       `I have murdered ${random} people so far today.`,
     ];
     return quote(channelID, message, list, /!mepole (\d+)/i, '- mepole~');
