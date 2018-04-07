@@ -43,7 +43,7 @@ module.exports.start = () => {
 
   const listCommands = (channelID) => {
     const list = [
-      '!commands',
+      //'!commands',
       '!roll dxx',
       '!roll xdxx',
       '!proll dxx',
