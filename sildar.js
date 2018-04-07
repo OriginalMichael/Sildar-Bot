@@ -152,8 +152,9 @@ module.exports.start = () => {
       const max = processed.match(/\${\d+ to (\d+)/)[1];
       processed = processed.replace(/\${\d+ to \d+}/, randomInteger(min, max));
     }
-    let quote = `${processed} ${signature}`
-    if(list.length > 1) quote = `${quote} (${num + 1}/${list.length})`;
+    let quote = processed;
+    if (signature.length) quote = `${quote} ${signature}`;
+    if (list.length > 1) quote = `${quote} (${num + 1}/${list.length})`;
     bot.sendMessage({
       to: channelID,
       message: quote,
