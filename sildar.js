@@ -161,7 +161,7 @@ module.exports.start = () => {
     } else {
       num -= 1; 
     }
-    const quote = `${list[num]} - Ilthar~`;
+    const quote = `${list[num]} - Ilthar~ (${num + 1}/${list.length})`;
     bot.sendMessage({
       to: channelID,
       message: quote,
