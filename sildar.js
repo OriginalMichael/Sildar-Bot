@@ -43,16 +43,16 @@ module.exports.start = () => {
 
   const listCommands = (channelID) => {
     const list = [
-      //'!commands',
-      '!roll dxx',
-      '!roll xdxx',
-      '!proll dxx',
-      '!proll xdxx',
-      '!sildar roll dxx',
-      '!sildar roll xdxx',
-      '!sildar',
-      '!varjil',
-      '!ilthar',
+      '! commands',
+      '! roll dxx',
+      '! roll xdxx',
+      '! proll dxx',
+      '! proll xdxx',
+      '! sildar roll dxx',
+      '! sildar roll xdxx',
+      '! sildar',
+      '! varjil',
+      '! ilthar x',
     ];
     const commands = `${list}`.replace(/,/g, '\n');
     bot.sendMessage({
