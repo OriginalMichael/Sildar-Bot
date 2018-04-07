@@ -31,9 +31,7 @@ module.exports.start = () => {
       if (message.match(/!sildar roll d\d+/i)) return sildarRollSingle(channelID);
       if (message.match(/!sildar roll \d+d\d+/i)) return sildarRollMultiple(channelID, message);
       if (message.match(/!sildar/i)) return sildarStatus(channelID);
-      if (message.match(/!varjil/i)) return quote(channelID, message, '!varjil');
-      if (message.match(/!ilthar/i)) return quote(channelID, message, '!ilthar');
-      if (message.match(/!mepole/i)) return quote(channelID, message, '!mepole');
+      return quote(channelID, message);
     } catch (err) {
       console.log(err);
       bot.sendMessage({
@@ -128,9 +126,12 @@ module.exports.start = () => {
     });
   }
   
-  const quote = (channelID, message, who) => {
-    const list = quotes[who].quotes;
-    const signature = quotes[who].signature;
+  const quote = (channelID, message) => {
+    const who = message.split(' ')[0].toLowerCase();
+    const hasQuote = quotes[who];
+    if (!hasQuote) return;
+    const list = hasQuote.quotes;
+    const signature = hasQuote.signature;
     const regex = new RegExp(`${who} (\\d+)`, 'i');
     let num = 0;
     try {
