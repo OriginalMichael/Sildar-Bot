@@ -1,0 +1,47 @@
+{
+  "!commands": {
+    "signature": "",
+    "quotes": [
+      "! commands",
+      "! roll dxx",
+      "! roll xdxx",
+      "! proll dxx",
+      "! proll xdxx",
+      "! sildar roll dxx",
+      "! sildar roll xdxx",
+      "! sildar",
+      "! varjil x",
+      "! ilthar x",
+      "! mepole x",
+    ],
+  },
+  "!varjil": {
+    "signature": "- Varjil~",
+    "quotes": [
+      "I am black. <:varjilisblack:431658564101210122>",
+      "Something came up last minute. Again.",
+      "I'm tired.",
+      "You suck. jkjk. No. Actually, you are a loser.",
+      "It's ${8-11} PM. Almost time for lunch.",
+      "VDawg is in da haus!",
+      "oh lol\nkk\nyay\nim a black guy\ni know thats news to some of you\nwhat is scott supposed to me\nbe*\n",
+    ],
+  },
+  "!ilthar": {
+    "signature": "- Ilthar~",
+    "quotes": [
+      "Do you have burgers?",
+      "I want a fifteen feet long two by four.",
+      "Here, have ${5-25} gold for this thing worth ${1-7} copper.",
+      "I will have one of everything. Bring it to my room.",
+    ],
+  },
+  "!mepole": {
+    "signature": "- mepole~",
+    "quotes": [
+      "I am mepole.",
+      "You suck.",
+      "I have murdered ${3-57} people so far today.",
+    ],
+  },
+}
