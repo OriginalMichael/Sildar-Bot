@@ -139,11 +139,11 @@ module.exports.start = () => {
       response = 'Nope! You can\'t spell either!';
     } else {
       const num = word.length;
-      const probability = Math.floor(100 / num);
+      const probability = Math.floor(100 * Math.sqrt(num) / num);
       const result = randomInteger(1, 100);
       if (result <= probability) {
         response = 'Surprisingly, yes.';
-      } else if (result <= probability * 3) {
+      } else if (result <= probability * 2) {
         const messages = [
           'Maybe.',
           'Probably not.',
