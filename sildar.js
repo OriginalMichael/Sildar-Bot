@@ -163,7 +163,7 @@ module.exports.start = () => {
     }
     bot.sendMessage({
       to: channelID,
-      message: response,
+      message: `${word}? ${response}`,
     });
   }
 
