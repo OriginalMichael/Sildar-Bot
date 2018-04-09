@@ -1,7 +1,8 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
-var quotes = require('./quotes.json');
+var quotes = require('./data/quotes.json');
+var words = require('./data/words_dictionary.json');
 
 module.exports.start = () => {
   logger.remove(logger.transports.Console);
@@ -31,6 +32,7 @@ module.exports.start = () => {
       if (message.match(/!sildar roll d\d+/i)) return sildarRollSingle(channelID);
       if (message.match(/!sildar roll \d+d\d+/i)) return sildarRollMultiple(channelID, message);
       if (message.match(/!sildar/i)) return sildarStatus(channelID);
+      if (message.match(/can scott spell.*/i)) return spellScott(channelID, message);
       return quote(channelID, message);
     } catch (err) {
       console.log(err);
@@ -126,6 +128,45 @@ module.exports.start = () => {
     });
   }
   
+  const spellScott = (channelID, message) => {
+    let word = message.match(/can scott spell(.*)/i)[1].toLowerCase().trim().split(' ')[0];
+    const isQuestion = word.slice(-1) === '?';
+    if (isQuestion) word = word.slice(0, -1);
+    let response;
+    if (!word.length || word === '?') {
+      response = 'Nope!';
+    } else if (!words[word]) {
+      response = 'Nope! You can\'t spell either!';
+    } else {
+      const num = word.length;
+      const probability = Math.floor(100 / num);
+      const result = randomInteger(1, 100);
+      if (result <= probability) {
+        response = 'Surprisingly, yes.';
+      } else if (result <= probability * 3) {
+        const messages = [
+          'Maybe.',
+          'Probably not.',
+          'There is a chance.',
+          'Unlikely.',
+          'Highly unlikely.',
+          'Probably.',
+          'Doubtful.',
+          'Improbable.',
+          'Almost certainly.',
+          'I doubt it, but I\'m Sildar so what do I know?',
+        ];
+        response = messages[randomInteger(0, messages.length - 1)];
+      } else {
+        response = 'Nope!';
+      }
+    }
+    bot.sendMessage({
+      to: channelID,
+      message: response,
+    });
+  }
+
   const quote = (channelID, message) => {
     const who = message.split(' ')[0].toLowerCase();
     const hasQuote = quotes[who];
