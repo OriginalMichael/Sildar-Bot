@@ -21,6 +21,11 @@ module.exports.start = () => {
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
   });
+  
+  bot.on('disconnect', function (msg, code) {
+    if (code === 0) return console.log(msg);
+    bot.connect();
+  });
 
   bot.on('message', function (user, userID, channelID, message, evt) {
     try {
